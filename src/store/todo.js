@@ -12,11 +12,17 @@ const getters = {
 const mutations = {
   mutateList: (state, item) => {
     state.list.push(item)
+    localStorage.setItem('userList', JSON.stringify(state.list))
   },
 
   mutateToggleItem: (state, item) => {
     const currentItem = state.list.find(itemList => itemList === item)
     currentItem.checked = !currentItem.checked
+    localStorage.setItem('userList', JSON.stringify(state.list))
+  },
+
+  mutateUserList: (state, list) => {
+    state.list = list
   }
 }
 
@@ -33,6 +39,10 @@ const actions = {
 
   toggleItem: ({ commit }, item) => {
     commit('mutateToggleItem', item)
+  },
+
+  setUserList: ({ commit }, list) => {
+    commit('mutateUserList', list)
   }
 }
 

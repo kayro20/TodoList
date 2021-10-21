@@ -10,10 +10,15 @@ export default defineComponent({
   beforeCreate () {
     const $store = useStore()
     const userMode = localStorage.getItem('darkMode') === 'true'
+    const userList = JSON.parse(localStorage.getItem('userList'))
 
     userMode
       ? $store.commit('mode/mutateMode', userMode)
       : localStorage.setItem('darkMode', false)
+
+    userList
+      ? $store.commit('todo/mutateUserList', userList)
+      : localStorage.setItem('userList', [])
   }
 })
 </script>
