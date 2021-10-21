@@ -3,7 +3,10 @@ const state = {
 }
 
 const getters = {
-  list: state => state.list
+  all: state => state.list,
+  doneItems: state => state.list.filter(item => item.checked),
+  activeItems: state => state.list.filter(item => !item.checked),
+  itemsLeft: state => state.list.filter(item => !item.checked).length
 }
 
 const mutations = {
@@ -19,13 +22,13 @@ const mutations = {
 
 const actions = {
   addItem: ({ commit }, item) => {
-    const teste = {
+    const newItem = {
       label: item,
       checked: false,
       id: Date.now()
     }
-    console.log(teste)
-    commit('mutateList', teste)
+
+    commit('mutateList', newItem)
   },
 
   toggleItem: ({ commit }, item) => {

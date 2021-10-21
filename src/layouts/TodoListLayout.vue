@@ -25,14 +25,19 @@
       </div>
 
       <TodoCard>
-        <div v-if="list.length > 0">
-          <div v-for="(currentTask, index) in list" :key="index">
+        <div v-if="getList().length > 0">
+          <div v-for="(currentTask, index) in getList()" :key="index">
             <ItemList :task="currentTask" />
           </div>
         </div>
         <div v-else>
           There are no todos!
         </div>
+
+        <span>{{ itemsLeft }} item(s) left</span>
+        <q-btn color="primary" flat label="All" @click="changeType('all')" />
+        <q-btn color="primary" flat label="Active" @click="changeType('activeItems')" />
+        <q-btn color="primary" flat label="Done" @click="changeType('doneItems')" />
       </TodoCard>
     </div>
   </q-layout>
@@ -74,14 +79,11 @@ export default defineComponent({
   data () {
     return {
       task: '',
-      todos: {
-        active: [],
-        done: []
-      }
+      type: 'all'
     }
   },
   computed: {
-    ...mapGetters('todo', ['list']),
+    ...mapGetters('todo', ['all', 'activeItems', 'doneItems', 'itemsLeft']),
     ...mapGetters('mode', ['darkMode'])
   },
   methods: {
@@ -89,6 +91,12 @@ export default defineComponent({
     addTaskInTodoList (item) {
       this.task = ''
       this.addItem(item)
+    },
+    getList () {
+      return this[this.type]
+    },
+    changeType (type) {
+      this.type = type
     }
   }
 })
