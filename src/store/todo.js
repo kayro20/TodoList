@@ -23,6 +23,10 @@ const mutations = {
 
   mutateUserList: (state, list) => {
     state.list = list
+  },
+
+  mutateClearList: (state) => {
+    state.list = state.list.filter(item => !item.checked)
   }
 }
 
@@ -43,6 +47,10 @@ const actions = {
 
   setUserList: ({ commit }, list) => {
     commit('mutateUserList', list)
+  },
+
+  clearDoneItems: ({ commit }) => {
+    commit('mutateClearList')
   }
 }
 

@@ -38,6 +38,7 @@
         <q-btn color="primary" flat label="All" @click="changeType('all')" />
         <q-btn color="primary" flat label="Active" @click="changeType('activeItems')" />
         <q-btn color="primary" flat label="Done" @click="changeType('doneItems')" />
+        <q-btn color="primary" flat label="Clear Completed" @click="clearDoneItems" />
       </TodoCard>
     </div>
   </q-layout>
@@ -87,7 +88,7 @@ export default defineComponent({
     ...mapGetters('mode', ['darkMode'])
   },
   methods: {
-    ...mapActions('todo', ['addItem']),
+    ...mapActions('todo', ['addItem', 'clearDoneItems']),
     addTaskInTodoList (item) {
       this.task = ''
       this.addItem(item)
