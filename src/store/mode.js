@@ -8,6 +8,7 @@ const getters = {
 
 const mutations = {
   mutateMode: (state, mode) => {
+    localStorage.setItem('darkMode', mode)
     state.darkMode = mode
   }
 }

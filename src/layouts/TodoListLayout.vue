@@ -58,6 +58,9 @@ export default defineComponent({
     const $q = useQuasar()
     const $store = useStore()
 
+    const isDarkMode = $store.state.mode.darkMode
+    $q.dark.set(isDarkMode)
+
     const toggleMode = () => {
       $q.dark.toggle()
       $store.commit('mode/mutateMode', $q.dark.isActive)
