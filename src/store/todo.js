@@ -27,6 +27,7 @@ const mutations = {
 
   mutateClearList: (state) => {
     state.list = state.list.filter(item => !item.checked)
+    localStorage.setItem('userList', JSON.stringify(state.list))
   }
 }
 
