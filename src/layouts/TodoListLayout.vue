@@ -1,45 +1,64 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <div class="absolute-center container q-pa-sm">
+  <q-layout view="lhr Lpr lFr">
+    <div class="container content-center full-width items-center justify-center row wrap">
       <div class="wrapper">
-        <div class="text-h2">TODO</div>
+        <div class="col-xs-12 justify-between row">
+          <div class="text-h2">TODO</div>
 
-        <div v-if="darkMode">
-          <img
-            class="mode"
-            src="~assets/todolist/icon-sun.svg"
-            @click="toggleMode"
-          >
-        </div>
-        <div v-else>
-          <img
-            class="mode"
-            src="~assets/todolist/icon-moon.svg"
-            @click="toggleMode"
-          >
-        </div>
-      </div>
-
-      <div>
-        <InputTasks v-model="task" @keydown.enter="addTaskInTodoList(task)" />
-      </div>
-
-      <TodoCard>
-        <div v-if="getList().length > 0">
-          <div v-for="(currentTask, index) in getList()" :key="index">
-            <ItemList :task="currentTask" />
+          <div v-if="darkMode">
+            <img
+              class="mode"
+              src="~assets/todolist/icon-sun.svg"
+              @click="toggleMode"
+            >
+          </div>
+          <div v-else>
+            <img
+              class="mode"
+              src="~assets/todolist/icon-moon.svg"
+              @click="toggleMode"
+            >
           </div>
         </div>
-        <div v-else>
-          There are no todos!
+        <div class="col-xs-12">
+          <div>
+            <InputTasks v-model="task" @keydown.enter="addTaskInTodoList(task)" />
+          </div>
         </div>
 
-        <span>{{ itemsLeft }} item(s) left</span>
-        <q-btn color="primary" flat label="All" @click="changeType('all')" />
-        <q-btn color="primary" flat label="Active" @click="changeType('activeItems')" />
-        <q-btn color="primary" flat label="Done" @click="changeType('doneItems')" />
-        <q-btn color="primary" flat label="Clear Completed" @click="clearDoneItems" />
-      </TodoCard>
+        <div class="col-xs-12">
+          <TodoCard>
+            <template #list>
+              <div v-if="getList().length > 0">
+                <div v-for="(currentTask, index) in getList()" :key="index">
+                  <ItemList :task="currentTask" />
+                </div>
+              </div>
+              <div v-else class="text-body1">
+                There are no todos!
+              </div>
+            </template>
+
+            <template #footer>
+              <div class="text-body2">{{ itemsLeft }} item(s) left</div>
+              <div class="filter">
+                <CustomLink :active="type === 'all'" @click="changeType('all')">
+                  All
+                </CustomLink>
+                <CustomLink :active="type === 'activeItems'" @click="changeType('activeItems')">
+                  Active
+                </CustomLink>
+                <CustomLink :active="type === 'doneItems'" @click="changeType('doneItems')">
+                  Completed
+                </CustomLink>
+              </div>
+              <CustomLink @click="clearDoneItems">
+                Clear Completed
+              </CustomLink>
+            </template>
+          </TodoCard>
+        </div>
+      </div>
     </div>
   </q-layout>
 </template>
@@ -51,13 +70,13 @@ import { useStore, mapActions, mapGetters } from 'vuex'
 
 import InputTasks from 'components/Input.vue'
 import TodoCard from 'components/Card.vue'
-import ItemList from 'components/ItemList.vue'
+import CustomLink from 'components/Link.vue'
 
 export default defineComponent({
   name: 'TodoList',
   components: {
     InputTasks,
-    ItemList,
+    CustomLink,
     TodoCard
   },
   setup () {
@@ -114,21 +133,41 @@ body.body--light {
   background-color: $light;
 }
 .text-h2 {
-  font-family: "Josefin Sans", sans-serif;
   letter-spacing: 10px;
   font-weight: 700;
   font-size: 2.5rem;
   color: $white;
 }
-.wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.text-body1 {
+  margin: auto;
+  font-size: 1.2rem;
+  color: $gray;
 }
-.container {
-  min-width: 500px;
+.text-body2 {
+  font-size: .75rem;
+  font-weight: 700;
+  color: $gray;
+  display: inline-block;
+}
+.wrapper {
+  padding: 2rem 1rem;
+  width: 100%;
+  max-width: 575px;
 }
 .mode {
   cursor: pointer;
+}
+.container {
+  height: 100vh;
+}
+.filter {
+  display: flex;
+  .link {
+    margin-right: 1rem;
+  }
+}
+.q-checkbox__bg {
+  border-radius: 10px;
+  border: solid 1px #393a4c;
 }
 </style>

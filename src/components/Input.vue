@@ -4,6 +4,8 @@
     borderless
     class="todo-input"
     :class="{ dark: store.state.mode.darkMode }"
+    :input-style="{fontSize: '1.2rem', color: '#cacde8'}"
+    placeholder="Create a new todo..."
   >
     <template #prepend>
       <div class="circle" />
@@ -33,6 +35,7 @@ export default defineComponent({
 .todo-input {
   border-radius: 5px;
   padding-left: 20px;
+  background-color: #FFF;
 }
 .todo-input.dark {
   background-color: $dark-gray;

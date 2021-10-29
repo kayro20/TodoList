@@ -1,7 +1,13 @@
 <template>
   <q-card class="todo-card">
-    <q-card-section>
-      <slot />
+    <q-card-section class="card">
+      <div class="column flex-start list">
+        <slot name="list" />
+      </div>
+
+      <div class="footer items-center justify-between row">
+        <slot name="footer" />
+      </div>
     </q-card-section>
   </q-card>
 </template>
@@ -16,8 +22,20 @@ export default defineComponent({
 
 <style lang="scss">
 .todo-card {
+  min-height: 10rem;
   margin-top: 16px;
-  min-height: 400px;
+}
+.list {
+  height: 24.5rem;
+  overflow: auto;
+}
+.todo-card.q-dark {
   background-color: $dark-gray;
+}
+.card {
+  padding:0;
+}
+.footer {
+  padding: 1rem;
 }
 </style>
