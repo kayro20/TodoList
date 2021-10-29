@@ -1,2 +1,4 @@
-export function someMutation (/* state */) {
+export function someMutation (state) {
+  console.log(state)
+  localStorage.setItem('isDarkMode', state.darkMode)
 }
